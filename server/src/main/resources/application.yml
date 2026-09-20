@@ -1,0 +1,14 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: walkie-talkie-server
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+walkie-talkie:
+  max-json-bytes: 8192
+  max-audio-bytes: 4096
+  max-talk-seconds: 30

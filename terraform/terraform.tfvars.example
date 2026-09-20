@@ -1,0 +1,6 @@
+aws_region             = "us-east-1"
+availability_zone_suffix = "a"
+key_pair_name          = "walkie-talkie-admin"
+app_image              = "ghcr.io/your-org/walkie-talkie-server:0.1.0"
+domain                = "walkie.example.com"
+ssh_cidrs              = ["203.0.113.10/32"]

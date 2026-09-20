@@ -131,7 +131,7 @@ The server derives user and channel identity from the authenticated WebSocket se
 
 - Separate UI, application/domain logic, WebSocket transport, and audio capture/playback.
 - Model connection, channel membership, and push-to-talk as explicit state rather than scattered booleans.
-- Use coroutines tied to lifecycle-aware scopes. Cancel recording, playback, and socket work when their owner stops.
+- Use coroutines tied to lifecycle-aware scopes. Cancel recording, playback, and socket work whe n their owner stops.
 - Hold-to-talk behavior must stop transmission on touch release, cancellation, lifecycle loss, socket loss, or server denial.
 - Request microphone permission immediately before it is needed and explain denial without crashing.
 - Never record in the background without an explicit product requirement and the required Android foreground-service treatment.

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y ca-certificates curl docker.io
+systemctl enable --now docker
+
+mkdir -p /opt/walkie-talkie
+cat > /opt/walkie-talkie/Caddyfile <<'CADDY'
+${domain == "" ? ":80" : domain} {
+    reverse_proxy 127.0.0.1:${app_port}
+}
+CADDY
+
+docker pull ${app_image}
+docker rm -f walkie-talkie-server 2>/dev/null || true
+docker run -d \
+  --name walkie-talkie-server \
+  --restart unless-stopped \
+  -p 127.0.0.1:${app_port}:${app_port} \
+  ${app_image}
+
+docker run -d \
+  --name walkie-talkie-caddy \
+  --restart unless-stopped \
+  --network host \
+  -v /opt/walkie-talkie/Caddyfile:/etc/caddy/Caddyfile:ro \
+  -v caddy_data:/data \
+  -v caddy_config:/config \
+  caddy:2
